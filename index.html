@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>小移 Xiaoyi · 懂你的移动生活管家 | 产品演示</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ============ NAVIGATION ============ -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="brand">
+      <div class="brand-logo">
+        <svg viewBox="0 0 48 48" width="36" height="36">
+          <defs>
+            <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#00c6ff"/>
+              <stop offset="100%" stop-color="#0072ff"/>
+            </linearGradient>
+          </defs>
+          <circle cx="24" cy="24" r="22" fill="url(#logoGrad)"/>
+          <path d="M14 30 Q 24 10 34 30" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="24" cy="22" r="3" fill="#fff"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <div class="brand-name">小移 <span class="brand-en">Xiaoyi</span></div>
+        <div class="brand-tag">懂你的移动生活管家</div>
+      </div>
+    </div>
+    <ul class="nav-menu">
+      <li><a href="#hero">首页</a></li>
+      <li><a href="#scenarios">场景演示</a></li>
+      <li><a href="#tech">技术优势</a></li>
+      <li><a href="#market">市场机会</a></li>
+      <li><a href="#invest" class="nav-cta">投资亮点</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section id="hero" class="hero">
+  <div class="hero-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-badge">✨ 新一代 AI 移动生活入口</div>
+      <h1 class="hero-title">
+        <span class="gradient-text">小移</span><br/>
+        懂你的<span class="accent">移动生活管家</span>
+      </h1>
+      <p class="hero-desc">
+        基于端云协同大模型打造的智能助手，覆盖通信、家庭、出行、关怀四大生活场景。
+        千人千面的个性化服务，让每一次连接都更懂你。
+      </p>
+      <div class="hero-cta">
+        <button class="btn btn-primary" onclick="document.getElementById('scenarios').scrollIntoView({behavior:'smooth'})">
+          开始体验 Demo →
+        </button>
+        <button class="btn btn-ghost" onclick="document.getElementById('invest').scrollIntoView({behavior:'smooth'})">
+          查看投资亮点
+        </button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num" data-target="4.2">0</div>
+          <div class="stat-unit">亿+</div>
+          <div class="stat-label">潜在用户基础</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" data-target="95">0</div>
+          <div class="stat-unit">%</div>
+          <div class="stat-label">问题解决率</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" data-target="8">0</div>
+          <div class="stat-unit">大</div>
+          <div class="stat-label">生活场景覆盖</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="phone-showcase">
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="ph-status">
+              <span>9:41</span>
+              <span>●●● 5G</span>
+            </div>
+            <div class="ph-avatar">
+              <div class="avatar-ring"></div>
+              <div class="avatar-core">移</div>
+            </div>
+            <div class="ph-greeting">您好，我是小移</div>
+            <div class="ph-sub">今天想聊点什么？</div>
+            <div class="ph-chips">
+              <span class="chip">📊 查话费</span>
+              <span class="chip">📦 换套餐</span>
+              <span class="chip">🏠 开空调</span>
+              <span class="chip">✈️ 开漫游</span>
+            </div>
+            <div class="ph-mic">
+              <div class="mic-wave"></div>
+              <div class="mic-wave"></div>
+              <div class="mic-icon">🎙</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCENARIOS ============ -->
+<section id="scenarios" class="scenarios">
+  <div class="section-head">
+    <div class="section-eyebrow">互动演示</div>
+    <h2 class="section-title">五大关键业务场景</h2>
+    <p class="section-desc">点击下方场景卡片，亲身体验小移如何重塑移动生活</p>
+  </div>
+
+  <div class="scenario-tabs">
+    <button class="tab active" data-scene="1">
+      <div class="tab-icon">🎯</div>
+      <div class="tab-name">智能套餐管家</div>
+      <div class="tab-desc">AI 自动分析·一键优化</div>
+    </button>
+    <button class="tab" data-scene="2">
+      <div class="tab-icon">💬</div>
+      <div class="tab-name">AI 对话客服</div>
+      <div class="tab-desc">7×24 秒级响应</div>
+    </button>
+    <button class="tab" data-scene="3">
+      <div class="tab-icon">🏠</div>
+      <div class="tab-name">全屋智慧中枢</div>
+      <div class="tab-desc">一句话掌控全家</div>
+    </button>
+    <button class="tab" data-scene="4">
+      <div class="tab-icon">✈️</div>
+      <div class="tab-name">出行通信助手</div>
+      <div class="tab-desc">跨境无感漫游</div>
+    </button>
+    <button class="tab" data-scene="5">
+      <div class="tab-icon">💝</div>
+      <div class="tab-name">银发数字关怀</div>
+      <div class="tab-desc">让科技有温度</div>
+    </button>
+  </div>
+
+  <!-- ===== Scenario 1: Package Manager ===== -->
+  <div class="scene-panel active" data-panel="1">
+    <div class="scene-left">
+      <div class="scene-tag">场景一</div>
+      <h3 class="scene-title">智能套餐管家</h3>
+      <p class="scene-story">
+        <strong>小王</strong>每月话费 128 元，但从不知道自己的套餐是否合适。传统方式需要到营业厅排队、对比套餐、手动办理，耗时至少 1 小时。<br/><br/>
+        小移基于最近 3 个月的用量习惯，<strong>20 秒完成智能诊断</strong>，推荐最优套餐并一键办理。
+      </p>
+      <div class="scene-highlights">
+        <div class="hl">✓ 基于真实用量的 AI 建模</div>
+        <div class="hl">✓ 千人千面个性化推荐</div>
+        <div class="hl">✓ 办理流程从 1 小时压缩到 20 秒</div>
+      </div>
+    </div>
+    <div class="scene-right">
+      <div class="phone-frame sim-phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen" id="scene1-screen">
+          <div class="sim-header">
+            <span class="sim-back">←</span>
+            <span class="sim-title">套餐管家</span>
+            <span class="sim-more">⋯</span>
+          </div>
+          <div class="sim-body" id="scene1-body">
+            <div class="sim-card">
+              <div class="sim-card-title">当前套餐</div>
+              <div class="sim-card-big">128 元 · 全球通畅享</div>
+              <div class="sim-card-sub">已使用 22 天</div>
+            </div>
+            <button class="sim-btn" id="scene1-btn">🔍 智能诊断我的套餐</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Scenario 2: AI Customer Service ===== -->
+  <div class="scene-panel" data-panel="2">
+    <div class="scene-left">
+      <div class="scene-tag">场景二</div>
+      <h3 class="scene-title">AI 对话式客服</h3>
+      <p class="scene-story">
+        凌晨 2 点手机突然无法上网，传统客服热线等待 15 分钟仍无人接听。<br/><br/>
+        小移 <strong>秒级响应</strong>，通过对话快速定位问题，远程下发配置，<strong>无需用户懂任何技术</strong>，所见即所得。
+      </p>
+      <div class="scene-highlights">
+        <div class="hl">✓ 7×24 小时秒级响应</div>
+        <div class="hl">✓ 多轮对话理解 + 远程自动修复</div>
+        <div class="hl">✓ 问题一次性解决率 95%</div>
+      </div>
+    </div>
+    <div class="scene-right">
+      <div class="phone-frame sim-phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="sim-header">
+            <span class="sim-back">←</span>
+            <span class="sim-title">小移助手</span>
+            <span class="sim-online">● 在线</span>
+          </div>
+          <div class="sim-chat" id="scene2-chat">
+            <div class="msg bot">
+              <div class="msg-avatar">移</div>
+              <div class="msg-bubble">你好呀～我是小移，有什么可以帮你？</div>
+            </div>
+          </div>
+          <div class="sim-quick" id="scene2-quick">
+            <button class="qbtn" data-q="手机突然上不了网了">手机突然上不了网了</button>
+            <button class="qbtn" data-q="我这个月流量够用吗">我这个月流量够用吗</button>
+            <button class="qbtn" data-q="帮我查下账单">帮我查下账单</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Scenario 3: Smart Home ===== -->
+  <div class="scene-panel" data-panel="3">
+    <div class="scene-left">
+      <div class="scene-tag">场景三</div>
+      <h3 class="scene-title">全屋智慧中枢</h3>
+      <p class="scene-story">
+        下班回家，<strong>一句"小移，我回来了"</strong>，灯光自动亮起，空调调到 26°，电视切到新闻频道，窗帘缓缓拉开。<br/><br/>
+        小移打通家庭宽带、IPTV、智能家居全链路，成为<strong>全屋唯一的智能入口</strong>。
+      </p>
+      <div class="scene-highlights">
+        <div class="hl">✓ 通信+家庭一体化中枢</div>
+        <div class="hl">✓ 多设备场景联动</div>
+        <div class="hl">✓ 支持 200+ 主流智能设备品牌</div>
+      </div>
+    </div>
+    <div class="scene-right">
+      <div class="smart-room" id="scene3-room">
+        <div class="room-bg"></div>
+        <div class="device device-light" data-device="灯光">
+          <div class="device-icon">💡</div>
+          <div class="device-label">灯光</div>
+          <div class="device-status">关闭</div>
+        </div>
+        <div class="device device-ac" data-device="空调">
+          <div class="device-icon">❄️</div>
+          <div class="device-label">空调</div>
+          <div class="device-status">关闭</div>
+        </div>
+        <div class="device device-tv" data-device="电视">
+          <div class="device-icon">📺</div>
+          <div class="device-label">电视</div>
+          <div class="device-status">关闭</div>
+        </div>
+        <div class="device device-curtain" data-device="窗帘">
+          <div class="device-icon">🪟</div>
+          <div class="device-label">窗帘</div>
+          <div class="device-status">关闭</div>
+        </div>
+        <div class="voice-control">
+          <button class="voice-btn" id="scene3-btn">
+            <span class="voice-ring"></span>
+            <span class="voice-ring"></span>
+            🎙 说："小移，我回来了"
+          </button>
+          <div class="voice-hint" id="scene3-hint">点击按钮触发语音指令</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Scenario 4: Travel ===== -->
+  <div class="scene-panel" data-panel="4">
+    <div class="scene-left">
+      <div class="scene-tag">场景四</div>
+      <h3 class="scene-title">出行通信助手</h3>
+      <p class="scene-story">
+        飞机落地东京的那一刻，传统方式需要手动开通漫游、担心高额流量费。<br/><br/>
+        小移识别到航班落地信号，<strong>自动为你开通当地最优套餐</strong>，推送翻译、汇率、紧急联系方式，让跨境沟通零门槛。
+      </p>
+      <div class="scene-highlights">
+        <div class="hl">✓ 航班信息+位置感知智能触发</div>
+        <div class="hl">✓ 全球 200+ 国家/地区无感漫游</div>
+        <div class="hl">✓ 多语种实时翻译</div>
+      </div>
+    </div>
+    <div class="scene-right">
+      <div class="phone-frame sim-phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="sim-header dark">
+            <span class="sim-back">←</span>
+            <span class="sim-title">出行助手</span>
+            <span class="sim-more">⋯</span>
+          </div>
+          <div class="travel-body" id="scene4-body">
+            <div class="travel-map">
+              <svg viewBox="0 0 300 200" class="map-svg">
+                <path d="M 30 100 Q 150 20 270 100" stroke="#00c6ff" stroke-width="2" fill="none" stroke-dasharray="6 4" class="flight-path"/>
+                <circle cx="30" cy="100" r="6" fill="#00c6ff"/>
+                <circle cx="270" cy="100" r="6" fill="#0072ff" class="dest-pin"/>
+                <text x="20" y="125" fill="#888" font-size="10">北京</text>
+                <text x="250" y="125" fill="#888" font-size="10">东京</text>
+                <text x="30" y="90" fill="#444" font-size="8">PEK</text>
+                <text x="270" y="90" fill="#444" font-size="8">NRT</text>
+                <g class="plane" id="travel-plane">
+                  <text x="-8" y="5" font-size="20">✈</text>
+                </g>
+              </svg>
+            </div>
+            <div class="travel-cards" id="travel-cards">
+              <div class="tcard tcard-flight">
+                <div class="tcard-title">航班 CA183</div>
+                <div class="tcard-info">北京 → 东京 · 已起飞</div>
+              </div>
+            </div>
+            <button class="sim-btn" id="scene4-btn">✈️ 模拟落地东京</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Scenario 5: Elder Care ===== -->
+  <div class="scene-panel" data-panel="5">
+    <div class="scene-left">
+      <div class="scene-tag">场景五</div>
+      <h3 class="scene-title">银发数字关怀</h3>
+      <p class="scene-story">
+        <strong>70 岁的李阿姨</strong>不会用智能手机，买菜、缴费、看病都要子女代劳。<br/><br/>
+        小移提供<strong>大字体+语音优先</strong>的关怀模式，一句话就能完成充话费、叫出租、视频呼叫家人，并支持<strong>家人远程协助</strong>操作。
+      </p>
+      <div class="scene-highlights">
+        <div class="hl">✓ 大字体 + 全程语音引导</div>
+        <div class="hl">✓ 一键 SOS 紧急呼叫</div>
+        <div class="hl">✓ 家人远程"带屏"协助</div>
+      </div>
+    </div>
+    <div class="scene-right">
+      <div class="phone-frame sim-phone elder-phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen elder-screen">
+          <div class="elder-header">
+            <div class="elder-greet">李阿姨，您好 👋</div>
+            <div class="elder-time" id="elder-time">下午好，今天天气晴</div>
+          </div>
+          <div class="elder-grid">
+            <button class="elder-btn" data-elder="call">
+              <div class="eb-icon">📞</div>
+              <div class="eb-text">呼叫家人</div>
+            </button>
+            <button class="elder-btn" data-elder="pay">
+              <div class="eb-icon">💰</div>
+              <div class="eb-text">充话费</div>
+            </button>
+            <button class="elder-btn" data-elder="taxi">
+              <div class="eb-icon">🚕</div>
+              <div class="eb-text">叫出租</div>
+            </button>
+            <button class="elder-btn sos" data-elder="sos">
+              <div class="eb-icon">🆘</div>
+              <div class="eb-text">紧急求助</div>
+            </button>
+          </div>
+          <div class="elder-voice">
+            <button class="elder-voice-btn" id="elder-voice-btn">🎙 长按说话</button>
+          </div>
+          <div class="elder-toast" id="elder-toast"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TECHNOLOGY ============ -->
+<section id="tech" class="tech">
+  <div class="section-head">
+    <div class="section-eyebrow">技术优势</div>
+    <h2 class="section-title">为什么是小移？</h2>
+    <p class="section-desc">四大核心技术能力，构筑难以复制的护城河</p>
+  </div>
+  <div class="tech-grid">
+    <div class="tech-card">
+      <div class="tech-icon-wrap">
+        <div class="tech-icon">⚡</div>
+      </div>
+      <h3>端云协同大模型</h3>
+      <p>手机端侧轻量模型 + 云端千亿参数大模型混合推理，隐私数据不出端，响应速度提升 10 倍。</p>
+      <div class="tech-metric"><span>端侧延迟</span><strong>&lt; 200ms</strong></div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon-wrap">
+        <div class="tech-icon">🧠</div>
+      </div>
+      <h3>千人千面个性化</h3>
+      <p>基于通信行为、位置、消费、家庭结构的多维用户画像，推荐准确率远超行业平均。</p>
+      <div class="tech-metric"><span>推荐准确率</span><strong>92%</strong></div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon-wrap">
+        <div class="tech-icon">🔐</div>
+      </div>
+      <h3>隐私优先架构</h3>
+      <p>联邦学习 + 差分隐私，敏感数据全程加密，符合《个人信息保护法》最高等级要求。</p>
+      <div class="tech-metric"><span>合规认证</span><strong>GDPR / 等保三级</strong></div>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon-wrap">
+        <div class="tech-icon">🌐</div>
+      </div>
+      <h3>全场景无感连接</h3>
+      <p>打通手机、宽带、IPTV、智能硬件、车联网，形成闭环生态，<strong>竞品难以复制</strong>。</p>
+      <div class="tech-metric"><span>接入生态</span><strong>200+ 品牌</strong></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MARKET ============ -->
+<section id="market" class="market">
+  <div class="section-head">
+    <div class="section-eyebrow">市场机会</div>
+    <h2 class="section-title">万亿级蓝海市场</h2>
+  </div>
+  <div class="market-grid">
+    <div class="market-big">
+      <div class="mb-num">4.2<span>亿+</span></div>
+      <div class="mb-label">中国移动存量用户</div>
+      <div class="mb-bar"><div class="mb-fill" style="width: 92%"></div></div>
+      <div class="mb-sub">覆盖率 92% · 全国第一运营商</div>
+    </div>
+    <div class="market-big">
+      <div class="mb-num">1.2<span>万亿</span></div>
+      <div class="mb-label">AI+通信服务市场规模</div>
+      <div class="mb-bar"><div class="mb-fill" style="width: 78%"></div></div>
+      <div class="mb-sub">年复合增长率 28%（2024-2028）</div>
+    </div>
+    <div class="market-big">
+      <div class="mb-num">65<span>%</span></div>
+      <div class="mb-label">用户愿意为 AI 助手付费</div>
+      <div class="mb-bar"><div class="mb-fill" style="width: 65%"></div></div>
+      <div class="mb-sub">艾瑞咨询 2024 调研数据</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INVESTMENT ============ -->
+<section id="invest" class="invest">
+  <div class="section-head light">
+    <div class="section-eyebrow">为何投资小移</div>
+    <h2 class="section-title">五大投资亮点</h2>
+  </div>
+  <div class="invest-grid">
+    <div class="invest-card">
+      <div class="in-num">01</div>
+      <h3>天然用户基础</h3>
+      <p>背靠中国移动 <strong>4.2 亿</strong>存量用户，零冷启动成本，是任何新入局者无法比拟的护城河。</p>
+    </div>
+    <div class="invest-card">
+      <div class="in-num">02</div>
+      <h3>高频刚需场景</h3>
+      <p>通信服务是日均 <strong>10+ 次</strong>的超高频刚需，天然具备成为生活入口的潜力。</p>
+    </div>
+    <div class="invest-card">
+      <div class="in-num">03</div>
+      <h3>技术+数据双壁垒</h3>
+      <p>端云协同大模型 + 独家通信数据，形成数据飞轮，<strong>越用越聪明</strong>。</p>
+    </div>
+    <div class="invest-card">
+      <div class="in-num">04</div>
+      <h3>商业变现清晰</h3>
+      <p>套餐推荐佣金、智能家居分成、增值服务订阅、广告精准投放 — <strong>四条变现路径</strong>已验证。</p>
+    </div>
+    <div class="invest-card">
+      <div class="in-num">05</div>
+      <h3>政策红利</h3>
+      <p>"数字中国"、"银发经济"、"AI+"三大国家战略<strong>高度契合</strong>，享受政策窗口期。</p>
+    </div>
+    <div class="invest-card cta-card">
+      <h3>准备好加入了吗？</h3>
+      <p>加入小移，共同定义下一代 AI 移动生活入口。</p>
+      <button class="btn btn-primary">联系我们 →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div>© 2026 小移 Xiaoyi · 懂你的移动生活管家</div>
+    <div class="footer-links">
+      <a href="#hero">返回顶部</a>
+      <a href="#scenarios">场景演示</a>
+      <a href="#invest">投资亮点</a>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
