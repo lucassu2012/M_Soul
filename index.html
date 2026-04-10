@@ -2,38 +2,10 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>小移 · 中国移动 AI 智能管家 · 交互演示</title>
-  <meta name="description" content="小移 Xiaoyi - 生活在你短信里的 AI 管家。零安装 · 主动服务 · 越用越懂你。" />
-
-  <!-- Tailwind CSS via CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              DEFAULT: '#0066FF',
-              light: '#3B82F6',
-              dark: '#0047B3',
-            },
-            gold: '#FF9500',
-            danger: '#FF3B30',
-            success: '#34C759',
-            ink: '#0A0A1A',
-          },
-          fontFamily: {
-            sans: ['-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', '"PingFang SC"', '"Hiragino Sans GB"', '"Microsoft YaHei"', 'sans-serif'],
-          },
-          boxShadow: {
-            glow: '0 0 60px rgba(0, 102, 255, 0.35)',
-            card: '0 4px 24px rgba(0, 0, 0, 0.08)',
-          },
-        },
-      },
-    };
-  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5" />
+  <meta name="theme-color" content="#050510" />
+  <meta name="description" content="Xiaoyi 小移 — China Mobile AI Soul Companion living in your SMS. Zero install · Proactive · Knows you better." />
+  <title>Xiaoyi 小移 · AI Soul Companion</title>
 
   <!-- React 18 + Babel standalone -->
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -42,15 +14,15 @@
 
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body class="bg-ink text-white antialiased">
+<body>
   <div id="root"></div>
 
   <!-- Ambient background layer -->
-  <div class="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-[#050510] via-[#0A0A1A] to-[#0E0E24]"></div>
-    <div class="absolute top-[-10%] left-[-10%] w-[50rem] h-[50rem] bg-brand/10 rounded-full blur-[120px] animate-pulse-slow"></div>
-    <div class="absolute bottom-[-10%] right-[-10%] w-[45rem] h-[45rem] bg-gold/10 rounded-full blur-[120px] animate-pulse-slow" style="animation-delay:2s"></div>
-    <div class="grid-bg absolute inset-0 opacity-[0.06]"></div>
+  <div class="fixed-bg" aria-hidden="true">
+    <div class="bg-gradient"></div>
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="grid-bg"></div>
   </div>
 
   <script type="text/babel" data-presets="react" src="app.jsx"></script>
