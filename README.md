@@ -107,53 +107,6 @@ Buttons fall into two categories:
 
 Every button produces a visible response. No dead-end clicks.
 
-## Bilingual Support
-
-All visible text uses the `t()` helper:
-
-```jsx
-const tr = useT();         // hook that reads current language from context
-<span>{tr(UI.brand)}</span> // renders "小移" or "Xiaoyi" based on lang
-```
-
-Language toggle is available in the header and on the welcome screen. Switching is instant — no page reload.
-
-## Local Development
-
-```bash
-# No dependencies to install. Just serve the files:
-python3 -m http.server 8000
-# or
-npx serve .
-
-# Open http://localhost:8000
-```
-
-To validate JSX syntax (optional):
-
-```bash
-npm install @babel/core @babel/preset-react
-node -e "
-  const babel = require('@babel/core');
-  const fs = require('fs');
-  babel.transformSync(fs.readFileSync('app.jsx','utf8'), {
-    presets: ['@babel/preset-react'],
-  });
-  console.log('OK');
-"
-```
-
-## Deployment
-
-**GitHub Pages** (recommended):
-
-1. Push to `gh-pages` branch (or any branch)
-2. Go to **Settings > Pages > Source**: Deploy from branch
-3. Select branch and `/ (root)` folder
-4. URL: `https://<username>.github.io/M_Soul/`
-
-Also works with Vercel, Netlify, Cloudflare Pages — zero config needed.
-
 ---
 
 <a id="中文"></a>
@@ -163,16 +116,6 @@ Also works with Vercel, Netlify, Cloudflare Pages — zero config needed.
 **小移**是面向中国移动 9 亿用户的 AI 灵魂伴侣。它不是一个独立 App，而是生活在用户手机原生短信 / RCS 消息应用中的 AI 助手——**零安装**。小移通过持续学习用户习惯，预测需求，逐渐进化为贴身的生活伙伴。
 
 本仓库是一个**交互式网页 Demo**，通过 9 个精心设计的场景，让决策者亲手体验小移的产品愿景。
-
-## 在线体验
-
-浏览器直接打开 `index.html`，或部署到 GitHub Pages：
-
-```
-https://<你的用户名>.github.io/M_Soul/
-```
-
-无需构建、无需 npm install、无需服务器——打开即用。
 
 ## 9 大核心场景
 
