@@ -211,68 +211,6 @@ M_Soul/
 └── README.md                   — 本文件
 ```
 
-## 设计系统
-
-### Token 体系
-
-所有视觉属性集中在 CSS 自定义属性中管理：
-
-- **颜色**：`--bg-*` / `--text-*` / `--border-*` / `--brand-*` / `--success/danger/warning/gold`
-- **间距**：`--s-1` 到 `--s-10`（4px 到 40px）
-- **圆角**：`--r-xs` 到 `--r-full`
-- **阴影**：`--shadow-sm/md/lg/glow/card`
-- **字号**：`--fs-xs` 到 `--fs-4xl`
-- **布局**：`--layout-header-h` / `--layout-max-w` / `--layout-touch`（44px）
-
-### 交互模型
-
-按钮分为两类：
-
-| 类型 | 判定 | 行为 |
-|------|------|------|
-| **Flow（推进剧情）** | 有 `userText` 字段 | 推进脚本叙事（仅在引擎暂停时） |
-| **装饰型** | 无 `userText` | 显示用户气泡 + 小移回应，不推进剧本 |
-
-每个按钮点击都有可见响应，不会出现点击无反馈的情况。
-
-## 双语支持
-
-所有可见文本使用 `t()` 函数：
-
-```jsx
-const tr = useT();           // 从 Context 读取当前语言
-<span>{tr(UI.brand)}</span>  // 根据语言渲染"小移"或"Xiaoyi"
-```
-
-页头和欢迎页都有语言切换按钮，切换即时生效，无需刷新页面。
-
-## 本地开发
-
-```bash
-# 无需安装任何依赖，直接启动静态服务：
-python3 -m http.server 8000
-# 或
-npx serve .
-
-# 打开 http://localhost:8000
-```
-
-## 部署
-
-**GitHub Pages**（推荐）：
-
-1. 推送到 `gh-pages` 分支
-2. 进入 **Settings > Pages > Source**：选择分支，文件夹选 `/ (root)`
-3. 访问 `https://<用户名>.github.io/M_Soul/`
-
-也可直接部署到 Vercel / Netlify / Cloudflare Pages，零配置。
-
----
-
-<div align="center">
-
-**HUAWEI × China Mobile**
-
 Built with React 18 &middot; Lucide Icons &middot; Custom Design System
 
 </div>
