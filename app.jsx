@@ -73,7 +73,7 @@ const UI = {
   welcomePillar2: { zh: '主动服务', en: 'Proactive Care' },
   welcomePillar3: { zh: '越用越懂你', en: 'Knows You Better' },
   welcomeCTA: { zh: '开始体验', en: 'Start Experience' },
-  welcomeFoot: { zh: '面向 9 亿用户 · 9 大核心场景 · 超越 Poke.com', en: '900M users · 9 core scenarios · Beyond Poke.com' },
+  welcomeFoot: { zh: '面向 9 亿用户 · 9 大核心场景 · 重新定义 AI 伴侣', en: '900M users · 9 core scenarios · Redefining AI companionship' },
   // Phone controls
   fastForward: { zh: '快进到下个节点', en: 'Fast forward' },
   replay: { zh: '重播场景', en: 'Replay scene' },
@@ -108,7 +108,7 @@ const UI = {
   timelineTitle: { zh: '从陌生人到灵魂伙伴', en: 'From Stranger to Soul Partner' },
   timelineSub: { zh: '滚动查看小移如何越用越懂你', en: 'Scroll to see how Xiaoyi grows with you' },
   switchCarrierTitle: { zh: '如果此时更换到其他运营商…', en: 'If you switch carriers now…' },
-  moatLine: { zh: '这就是"灵魂壁垒"——比 Poke.com 更深的用户粘性武器', en: 'This is the "Soul Moat" — deeper retention than Poke.com' },
+  moatLine: { zh: '这就是"灵魂壁垒"——运营商独有的用户粘性武器', en: 'This is the "Soul Moat" — a carrier-exclusive retention weapon' },
   // Cross-cut
   cardsTotal: { zh: '共 N 张卡片', en: 'N cards' },
   inboxTraditional: { zh: '传统短信收件箱（示例）', en: 'Traditional SMS inbox (sample)' },
@@ -2278,7 +2278,7 @@ const S5_EVOLUTION = {
   name: { zh: '灵魂进化', en: 'Soul Evolution' },
   icon: 'brain',
   tagline: { zh: '越用越懂你 · 预测式服务', en: 'Grows With You · Predictive Service' },
-  intro: { zh: '从陌生人到灵魂伙伴，Soul 档案越用越深，形成最强的用户留存壁垒——这是 Poke.com 做不到的深度绑定。', en: 'From stranger to soul partner, the Soul profile deepens daily — building the strongest retention moat. Beyond what Poke.com can achieve.' },
+  intro: { zh: '从陌生人到灵魂伙伴，Soul 档案越用越深，形成运营商独有的用户留存壁垒——最强的深度绑定。', en: 'From stranger to soul partner, the Soul profile deepens daily — building a carrier-exclusive retention moat that no competitor can replicate.' },
   traditional: [
     { text: { zh: '换运营商无感迁移，留存弱', en: 'Carrier switching is seamless — weak retention' } },
     { text: { zh: '没有专属理解，每次重新解释', en: 'No personal understanding, explain every time' } },
