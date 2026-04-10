@@ -78,6 +78,7 @@ const UI = {
   fastForward: { zh: '快进到下个节点', en: 'Fast forward' },
   replay: { zh: '重播场景', en: 'Replay scene' },
   playing: { zh: '小移正在服务中…', en: 'Xiaoyi is serving…' },
+  tapCardHint: { zh: '点击上方卡片的按钮继续 ↑', en: 'Tap a card button above to continue ↑' },
   scenarioEnd: { zh: '场景演示结束 · 体验下一个场景', en: 'Scene complete · Try the next scenario' },
   exploreNext: { zh: '继续探索下一场景', en: 'Continue to next scene' },
   inputPlaceholder: { zh: '短信 · 与小移对话', en: 'SMS · chat with Xiaoyi' },
@@ -471,7 +472,7 @@ function RCSCard({ card, onAction }) {
                 <button
                   key={i}
                   className={`rcs-btn ${b.tone || ''}`}
-                  onClick={() => onAction && onAction(b.action, tr(b.userText || b.text))}
+                  onClick={() => onAction && onAction(b.action, tr(b.userText || b.text), { decorative: !b.userText, ack: b.ack })}
                 >
                   {b.icon && <Icon name={b.icon} size={12} stroke="currentColor" strokeWidth={2.4}/>}
                   <span>{tr(b.text)}</span>
@@ -530,7 +531,7 @@ function RCSMulti({ cards, onAction }) {
               {c.buttons && (
                 <div className="rcs-buttons">
                   {c.buttons.map((b, j) => (
-                    <button key={j} className={`rcs-btn ${b.tone || ''}`} onClick={() => onAction && onAction(b.action, tr(b.userText || b.text))}>
+                    <button key={j} className={`rcs-btn ${b.tone || ''}`} onClick={() => onAction && onAction(b.action, tr(b.userText || b.text), { decorative: !b.userText, ack: b.ack })}>
                       {b.icon && <Icon name={b.icon} size={11} strokeWidth={2.4}/>}
                       <span>{tr(b.text)}</span>
                     </button>
@@ -883,6 +884,30 @@ function TimelineView({ scenario }) {
 }
 
 /* ============================================================
+   ACK DEFAULTS — inline acknowledgments for decorative button clicks
+   (buttons without a `userText` field do NOT advance the script;
+    instead they produce a small ack bubble from Xiaoyi so the user
+    always sees a response to their tap.)
+   ============================================================ */
+const GENERIC_ACK = { zh: '好的，已为你处理。', en: 'Done, I\'ve handled it.' };
+const ACK_DEFAULTS = {
+  detail: { zh: '详情已为你打开。', en: 'Details opened for you.' },
+  view: { zh: '已为你打开。', en: 'Opened for you.' },
+  noop: { zh: '好的，已为你打开。', en: 'OK, opened for you.' },
+  nav: { zh: '导航已为你打开。', en: 'Navigation opened.' },
+  navigate: { zh: '导航已为你打开。', en: 'Navigation opened.' },
+  locate: { zh: '位置已为你定位好。', en: 'Location pinned for you.' },
+  edit: { zh: '编辑器已为你打开，可直接修改。', en: 'Editor opened — you can edit directly.' },
+  other: { zh: '好的，我再为你推荐几个其他选项。', en: 'OK, let me suggest some alternatives.' },
+  switch: { zh: '没问题，我换个方案给你看。', en: 'No problem, here\'s another option.' },
+  remind: { zh: '提醒已为你设置好。', en: 'Reminder is set for you.' },
+  bell: { zh: '提醒已为你设置好。', en: 'Reminder is set for you.' },
+  later: { zh: '好，我会稍后再提醒你。', en: 'OK, I\'ll remind you later.' },
+  download: { zh: '文件已开始下载。', en: 'File download started.' },
+  info: { zh: '好的，已为你打开。', en: 'OK, opened for you.' },
+};
+
+/* ============================================================
    PHONE SIMULATOR — playback engine
    ============================================================ */
 function PhoneSimulator({ scenario, soul, setSoul, freshTags, setFreshTags, sessionKey }) {
@@ -961,13 +986,33 @@ function PhoneSimulator({ scenario, soul, setSoul, freshTags, setFreshTags, sess
 
   useEffect(() => () => { if (timerRef.current) clearTimeout(timerRef.current); }, [sessionKey]);
 
-  const handleAction = useCallback((action, label) => {
-    if (label) {
-      setPlayed(p => [...p, { t: 'text', sender: 'user', text: label, _k: Math.random().toString(36).slice(2) }]);
+  const handleAction = useCallback((action, label, opts = {}) => {
+    const { decorative = false, ack: customAck } = opts;
+    const randKey = () => Math.random().toString(36).slice(2);
+
+    // Flow button (non-decorative): only responds when the engine is paused
+    // and the user's choice is meant to advance the script.
+    if (!decorative) {
+      if (!waiting) return; // ignore out-of-context clicks
+      if (label) {
+        setPlayed(p => [...p, { t: 'text', sender: 'user', text: label, _k: randKey() }]);
+      }
+      setWaiting(false);
+      setIdx(i => i + 1);
+      return;
     }
-    setWaiting(false);
-    setIdx(i => i + 1);
-  }, []);
+
+    // Decorative click (no userText on the card button): acknowledge inline
+    // without advancing the scripted flow. User can still click a quick reply
+    // in the input area to move the scenario forward.
+    if (label) {
+      setPlayed(p => [...p, { t: 'text', sender: 'user', text: label, _k: randKey() }]);
+    }
+    const ackText = customAck || ACK_DEFAULTS[action] || GENERIC_ACK;
+    setTimeout(() => {
+      setPlayed(p => [...p, { t: 'text', sender: 'xiaoyi', text: ackText, _k: randKey() }]);
+    }, 500);
+  }, [waiting]);
 
   const fastForward = () => {
     if (timerRef.current) clearTimeout(timerRef.current);
@@ -1031,6 +1076,14 @@ function PhoneSimulator({ scenario, soul, setSoul, freshTags, setFreshTags, sess
                     {tr(r.label)}
                   </button>
                 ))}
+              </div>
+            )}
+            {currentPause && (!currentPause.replies || currentPause.replies.length === 0) && (
+              <div className="quick-replies no-scrollbar">
+                <span className="quick-reply" style={{ opacity: 0.7, cursor: 'default', display: 'inline-flex', alignItems: 'center', gap: 4, background: 'rgba(251, 191, 36, 0.1)', borderColor: 'rgba(251, 191, 36, 0.4)', color: '#FBBF24' }}>
+                  <Icon name="chevronDown" size={11} style={{ transform: 'rotate(180deg)' }}/>
+                  {tr(UI.tapCardHint)}
+                </span>
               </div>
             )}
             {!currentPause && !done && (
@@ -1451,7 +1504,7 @@ const S1_TARIFF = {
       highlight: { tone: 'success', icon: 'wallet', text: { zh: '每月省 ¥70  ·  每年省 ¥840', en: 'Save ¥70/month · ¥840/year' } },
       buttons: [
         { text: { zh: '立即切换', en: 'Switch now' }, action: 'switch', tone: 'primary', icon: 'refresh', userText: { zh: '立即切换', en: 'Switch now' } },
-        { text: { zh: '查看详情', en: 'See details' }, action: 'detail' },
+        { text: { zh: '查看详情', en: 'See details' }, action: 'detail', ack: { zh: '悦享 88 套餐：20GB 流量（不限速）· 200 分钟通话 · 100 条短信 · 赠免流音乐包 · 合约期 1 年可随时升级。', en: 'Smart ¥88: 20GB data (no throttle) · 200 min · 100 SMS · free music pack · 1-year contract, upgrade anytime.' } },
       ],
     }},
     { t: 'pause', replies: [] },
@@ -1522,19 +1575,19 @@ const S2_SMS = {
     { t: 'text', sender: 'xiaoyi', text: { zh: '我已经帮你整理了今天收到的 7 条短信，分类结果：', en: 'I sorted today\'s 7 messages into 4 categories:' } },
     { t: 'multi', cards: [
       { tone: 'brand', icon: 'package', title: { zh: '快递物流', en: 'Package' }, subtitle: { zh: '顺丰 · SF1234567890', en: 'SF · SF1234567890' }, text: { zh: '您的包裹已到达 朝阳区菜鸟驿站 A032', en: 'Arrived at Cainiao Station A032, Chaoyang' }, code: { zh: '取件码：6-8-2045', en: 'Pickup: 6-8-2045' }, buttons: [
-        { text: { zh: '查看位置', en: 'Locate' }, action: 'noop', icon: 'mapPin' },
-        { text: { zh: '稍后提醒', en: 'Remind later' }, action: 'noop', icon: 'clock' },
+        { text: { zh: '查看位置', en: 'Locate' }, action: 'noop', icon: 'mapPin', ack: { zh: '驿站在朝阳区建国路 88 号，距离你 1.2 公里。', en: 'Station at Jianguo Rd 88, Chaoyang · 1.2km from you.' } },
+        { text: { zh: '稍后提醒', en: 'Remind later' }, action: 'noop', icon: 'clock', ack: { zh: '好，我傍晚 6 点再提醒你取件。', en: 'OK, I\'ll ping you at 6pm to pick it up.' } },
       ]},
       { tone: 'warning', icon: 'creditCard', title: { zh: '账单提醒', en: 'Bill Due' }, subtitle: { zh: '中国银行 · 信用卡账单', en: 'BoC Credit Card' }, text: { zh: '本期应还：¥3,847.20', en: 'Amount due: ¥3,847.20' }, highlight: { tone: 'warning', icon: 'clock', text: { zh: '还款日：4 月 25 日（还有 16 天）', en: 'Due Apr 25 (16 days left)' } }, buttons: [
-        { text: { zh: '查看明细', en: 'View detail' }, action: 'noop' },
-        { text: { zh: '到期提醒', en: 'Set alert' }, action: 'noop', icon: 'bell' },
+        { text: { zh: '查看明细', en: 'View detail' }, action: 'noop', ack: { zh: '本期消费明细：餐饮 ¥1,380 · 购物 ¥1,620 · 交通 ¥847。', en: 'Statement: Food ¥1,380 · Shopping ¥1,620 · Transit ¥847.' } },
+        { text: { zh: '到期提醒', en: 'Set alert' }, action: 'noop', icon: 'bell', ack: { zh: '到期前 3 天和当天早上我都会提醒你。', en: 'I\'ll remind you 3 days before and on the due date morning.' } },
       ]},
       { tone: 'success', icon: 'plane', title: { zh: '出行信息', en: 'Travel' }, subtitle: { zh: '南航 CZ3108', en: 'CZ3108' }, text: { zh: '4月15日 08:30  北京首都 T2 → 广州白云', en: 'Apr 15 08:30 PEK T2 → Guangzhou' }, highlight: { tone: 'success', icon: 'check', text: { zh: '状态：正常', en: 'Status: On time' } }, buttons: [
-        { text: { zh: '机场导航', en: 'To airport' }, action: 'noop', icon: 'navigation' },
+        { text: { zh: '机场导航', en: 'To airport' }, action: 'noop', icon: 'navigation', ack: { zh: '从你家到首都 T2 约 45 分钟，建议 6 点出发。', en: '~45 min from home to PEK T2, suggest leaving at 6am.' } },
         { text: { zh: '航班追踪', en: 'Track flight' }, action: 'track', tone: 'primary', icon: 'bell', userText: { zh: '开启航班追踪', en: 'Enable flight tracking' } },
       ]},
       { tone: 'danger', icon: 'shield', title: { zh: '已过滤', en: 'Filtered' }, subtitle: { zh: '4 条可疑短信', en: '4 suspicious' }, text: { zh: '疑似诈骗：2 条（贷款、赌博）\n营销推广：2 条（促销、投资）', en: 'Likely scam: 2 (loan, gambling)\nMarketing: 2 (promo, invest)' }, buttons: [
-        { text: { zh: '查看详情', en: 'View details' }, action: 'noop' },
+        { text: { zh: '查看详情', en: 'View details' }, action: 'noop', ack: { zh: '已过滤：2 条贷款诱导 · 1 条境外赌博 · 2 条理财推广。要我屏蔽这些发送号码吗？', en: 'Filtered: 2 loan scams · 1 gambling · 2 financial promos. Want me to block these senders?' } },
       ]},
     ]},
     { t: 'pause', replies: [
@@ -1625,7 +1678,7 @@ const S3_FLIGHT = {
       foot: { zh: '对比：等飞机到广州约 13:00 · 高铁到广州约 14:02 · 相差仅 1 小时，但确定性高得多。', en: 'Comparison: flight arrival ~13:00 · train ~14:02 · only 1h gap but far more reliable.' },
       buttons: [
         { text: { zh: '立即购票', en: 'Buy ticket' }, action: 'buy', tone: 'primary', icon: 'check', userText: { zh: '买 G79 高铁票', en: 'Book G79 train' } },
-        { text: { zh: '导航去车站', en: 'Navigate' }, action: 'nav', icon: 'navigation' },
+        { text: { zh: '导航去车站', en: 'Navigate' }, action: 'nav', icon: 'navigation', ack: { zh: '已为你打开高德地图，目的地：北京南站，实时路况畅通，预计 35 分钟。', en: 'Gaode Maps opened — Beijing South, clear traffic, ~35 min.' } },
       ],
     }},
     { t: 'pause', replies: [] },
@@ -1726,7 +1779,7 @@ const S4_VIP = {
       highlight: { tone: 'success', icon: 'clock', text: { zh: '建议 13:10 出发 · 已设置 13:05 出发提醒', en: 'Leave 13:10 · alert set for 13:05' } },
       foot: { zh: '下午 30% 阵雨概率，望京 SOHO 停车困难，打车更方便。', en: '30% chance of rain, parking is hard — taxi recommended.' },
       buttons: [
-        { text: { zh: '打开导航', en: 'Open navigation' }, action: 'noop', icon: 'navigation' },
+        { text: { zh: '打开导航', en: 'Open navigation' }, action: 'noop', icon: 'navigation', ack: { zh: '已为你打开高德导航，目的地：望京 SOHO。', en: 'Gaode Maps opened — destination: Wangjing SOHO.' } },
         { text: { zh: '预约用车', en: 'Book car' }, action: 'book', tone: 'gold', icon: 'car', userText: { zh: '预约 13:00 专车', en: 'Book a 13:00 car' } },
       ],
     }},
@@ -1827,7 +1880,7 @@ const S_SECRETARY = {
       highlight: { tone: 'success', icon: 'wallet', text: { zh: '合计 ¥7,520 · 已用积分抵扣 ¥680', en: 'Total ¥7,520 · ¥680 redeemed from points' } },
       buttons: [
         { text: { zh: '全部确认预定', en: 'Confirm all' }, action: 'book', tone: 'primary', icon: 'check', userText: { zh: '全部确认预定', en: 'Confirm all' } },
-        { text: { zh: '调整方案', en: 'Adjust' }, action: 'edit', icon: 'edit' },
+        { text: { zh: '调整方案', en: 'Adjust' }, action: 'edit', icon: 'edit', ack: { zh: '好的，你想调整哪一项？机票舱位、酒店档次，还是出发时间？', en: 'Sure — which part? Cabin class, hotel tier, or departure time?' } },
       ],
     }},
     { t: 'pause', replies: [] },
@@ -2055,7 +2108,7 @@ const S_DEADLINE = {
       highlight: { tone: 'brand', icon: 'sparkles', text: { zh: '数据已对接你的 ERP，图表自动更新', en: 'Wired to your ERP — charts auto-refresh' } },
       buttons: [
         { text: { zh: '下载初稿', en: 'Download draft' }, action: 'download', tone: 'primary', icon: 'download', userText: { zh: '太好了，下载', en: 'Great, download' } },
-        { text: { zh: '在线编辑', en: 'Edit online' }, action: 'edit', icon: 'edit' },
+        { text: { zh: '在线编辑', en: 'Edit online' }, action: 'edit', icon: 'edit', ack: { zh: '已为你在浏览器打开初稿，所有图表都是活链接，数据变化会自动同步。', en: 'Draft opened in your browser — all charts are live-linked and auto-sync.' } },
       ],
     }},
     { t: 'pause', replies: [] },
@@ -2148,7 +2201,7 @@ const S_BUTLER = {
       highlight: { tone: 'brand', icon: 'sparkles', text: { zh: '少盐少油，你的胃正在养，适合', en: 'Low salt, low oil — perfect for your healing stomach' } },
       buttons: [
         { text: { zh: '就这个', en: 'This one' }, action: 'order', tone: 'primary', icon: 'check', userText: { zh: '就这个', en: 'This one' } },
-        { text: { zh: '换一个', en: 'Swap' }, action: 'switch' },
+        { text: { zh: '换一个', en: 'Swap' }, action: 'switch', ack: { zh: '好，我换个清淡的：本草堂的鸡丝粥 + 小菜 + 燕麦奶，¥68，同样 13:00 送到。要这个吗？', en: 'OK — Herbology chicken congee + side + oat milk, ¥68, same 13:00 delivery. Want this?' } },
       ],
     }},
     { t: 'pause', replies: [] },
@@ -2197,7 +2250,7 @@ const S_BUTLER = {
       highlight: { tone: 'gold', icon: 'heart', text: { zh: '卡片草稿：500 天，谢谢你还在我身边', en: 'Card draft: "500 days. Thank you for still being by my side."' } },
       buttons: [
         { text: { zh: '就这个', en: 'Perfect, this one' }, action: 'confirm', tone: 'primary', icon: 'check', userText: { zh: '完美，就这个', en: 'Perfect, this one' } },
-        { text: { zh: '换一个', en: 'Different one' }, action: 'other' },
+        { text: { zh: '换一个', en: 'Different one' }, action: 'other', ack: { zh: '好，另外两个备选：Diptyque 玫瑰蜡烛 ¥520 · 施华洛世奇钥匙链 ¥880。想看哪个？', en: 'Two alternatives: Diptyque rose candle ¥520 · Swarovski keychain ¥880. Which one?' } },
       ],
     }},
     { t: 'pause', replies: [] },
